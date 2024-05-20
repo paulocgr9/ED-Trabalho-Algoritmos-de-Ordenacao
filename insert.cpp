@@ -4,9 +4,10 @@
 
 using namespace std;
 
-void insertSort(Node**, int);
+template <typename T> void insertSort(Node<T>**, int);
 
-void insertSort(Node** head, int iLength)
+template <typename T>
+void insertSort(Node<T>** head, int iLength)
 {
     if (*head == nullptr)
     {
@@ -20,9 +21,9 @@ void insertSort(Node** head, int iLength)
     }
 
     int iInsertValue = 0;
-    Node* iInnerLoop = nullptr;
+    Node<T>* iInnerLoop = nullptr;
 
-    Node* current = (*head)->ptrNext;
+    Node<T>* current = (*head)->ptrNext;
     while (current != nullptr)
     {
         iInsertValue = current->iPayload;
@@ -38,3 +39,5 @@ void insertSort(Node** head, int iLength)
         current = current->ptrNext;
     }
 }
+
+template void insertSort(Node<int>**, int);

@@ -2,6 +2,6 @@
 #define insertH
 #include "LinkedList.h"
 
-void insertSort(Node**, int);
+template <typename T> void insertSort(Node<T>**, int);
 
 #endif

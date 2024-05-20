@@ -4,15 +4,26 @@
 
 using namespace std;
 
-void selectionSort(Node**);
-void optimizedSelectionSort(Node**);
+template <typename T> void selectionSort(Node<T>**);
+template <typename T> void optimizedSelectionSort(Node<T>**);
 
-void selectionSort(Node** head)
+template <typename T>
+void selectionSort(Node<T>** head)
 {
-    Node* currentOuter = *head;
+    if (*head == nullptr)
+    {
+        cout << "Impossível ordenar: lista vazia." << endl;
+        return;
+    }
+    if ((*head)->ptrNext == nullptr)
+    {
+        cout << "Impossível ordenar: lista de um elemento." << endl;
+        return;
+    }
+    Node<T>* currentOuter = *head;
     while(currentOuter != nullptr)
     {
-        Node* currentInner = currentOuter->ptrNext;
+        Node<T>* currentInner = currentOuter->ptrNext;
         while(currentInner != nullptr)
         {
             if (currentOuter->iPayload > currentInner->iPayload)
@@ -25,18 +36,29 @@ void selectionSort(Node** head)
     }
 }
 
-void optimizedSelectionSort(Node** head)
+template <typename T>
+void optimizedSelectionSort(Node<T>** head)
 {
+    if (*head == nullptr)
+    {
+        cout << "Impossível ordenar: lista vazia." << endl;
+        return;
+    }
+    if ((*head)->ptrNext == nullptr)
+    {
+        cout << "Impossível ordenar: lista de um elemento." << endl;
+        return;
+    }
     int minValue = 0;
-    Node* ptrSwap = 0;
+    Node<T>* ptrSwap = 0;
 
-    Node* currentOuter = *head;
+    Node<T>* currentOuter = *head;
     while(currentOuter != nullptr)
     {
         minValue = currentOuter->iPayload;
         ptrSwap = currentOuter;
 
-        Node* currentInner = currentOuter->ptrNext;
+        Node<T>* currentInner = currentOuter->ptrNext;
         while(currentInner != nullptr)
         {
             if (minValue > currentInner->iPayload)
@@ -50,3 +72,6 @@ void optimizedSelectionSort(Node** head)
         currentOuter = currentOuter->ptrNext;
     }
 }
+
+template void selectionSort(Node<int>**);
+template void optimizedSelectionSort(Node<int>**);
