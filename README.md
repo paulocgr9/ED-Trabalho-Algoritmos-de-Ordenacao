@@ -9,3 +9,8 @@ Atualmente o repositório conta com os seguintes algoritmos:
 No repositório também há um arquivo de texto que armazena o tempo em nanosegundos que cada um dos algoritmos levou para organizar 100 listas de 10000 valores cada.
 
 O repositório será atualizado conforme novos algoritmos de ordenação forem vistos em aula.
+
+
+## Templates
+
+Não tinhamos certeza de como usar os templates, já que deixavam código mais cheio e ilegível sem trazer vantagens. Por isso, a implementação dos nodos com templates ficou na branch `template`

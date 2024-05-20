@@ -1,8 +1,7 @@
 #include <iostream>
 #include "LinkedList.h"
-using std::cout;
-using std::endl;
-using std::rand;
+
+using namespace std;
 
 // Protótipos das funções
 Node* createNode(int);
