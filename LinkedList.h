@@ -1,20 +1,26 @@
 #ifndef LinkedListH
 #define LinkedListH
 
-// Criando uma estrutura de nó
-typedef struct Node
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::rand;
+
+// Criando uma estrutura de nós
+template <typename T>
+struct Node
 {
-    int iPayload;
+    T iPayload;
     Node* ptrNext;
     Node* ptrPrev;
-} Node;
+};
 
-void foo(int id, char *name);
-Node* createNode(int);
-Node* createRandomList(int, int, int, int);
-void displayList(Node*);
-void insertEnd(Node**, int);
-void swapValues(Node *, Node *);
-void freeList(Node **);
+template struct Node<int>;
+template <typename T> Node<T> *createNode(T);
+template <typename T> void displayList(Node<T> *);
+template <typename T> void insertEnd(Node<T> **, T);
+template <typename T> void swapValues(Node<T> *, Node<T> *);
+template <typename T> void freeList(Node<T> **);
+Node<int>* createRandomList(int, int, int, int);
 
 #endif

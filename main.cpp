@@ -17,8 +17,8 @@ int main()
 
     for (int iIndex = 0; iIndex < iNumeroSeeds; iIndex++)
     {
-        Node* currentList1 = createRandomList(0, 1000, 10000, iIndex);
-        Node* currentList2 = createRandomList(0, 1000, 10000, iIndex);
+        Node<int>* currentList1 = createRandomList(0, 1000, 10000, iIndex);
+        Node<int>* currentList2 = createRandomList(0, 1000, 10000, iIndex);
         
         auto timeStart = high_resolution_clock::now();
         bubbleSort(&currentList1, 10000);
@@ -50,8 +50,8 @@ int main()
 
     for (int iIndex = 0; iIndex < iNumeroSeeds; iIndex++)
     {
-        Node* currentList1 = createRandomList(0, 1000, 10000, iIndex);
-        Node* currentList2 = createRandomList(0, 1000, 10000, iIndex);
+        Node<int>* currentList1 = createRandomList(0, 1000, 10000, iIndex);
+        Node<int>* currentList2 = createRandomList(0, 1000, 10000, iIndex);
         
         auto timeStart = high_resolution_clock::now();
         selectionSort(&currentList1);
@@ -83,7 +83,7 @@ int main()
 
     for (int iIndex = 0; iIndex < iNumeroSeeds; iIndex++)
     {
-        Node* currentList1 = createRandomList(0, 1000, 10000, iIndex);
+        Node<int>* currentList1 = createRandomList(0, 1000, 10000, iIndex);
 
         auto timeStart = high_resolution_clock::now();
         insertSort(&currentList1, 10000);

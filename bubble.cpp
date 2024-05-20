@@ -4,10 +4,11 @@
 
 using namespace std;
 
-void bubbleSort(Node**, int);
-void optimizedBubbleSort(Node**, int);
+template <typename T> void bubbleSort(Node<T>**, int);
+template <typename T> void optimizedBubbleSort(Node<T>**, int);
 
-void bubbleSort(Node** head, int iLenght)
+template <typename T>
+void bubbleSort(Node<T>** head, int iLenght)
 {
     if (*head == nullptr)
     {
@@ -22,7 +23,7 @@ void bubbleSort(Node** head, int iLenght)
 
     for (int iOuterLoop = 0; iOuterLoop < iLenght-1; iOuterLoop++)
     {
-        Node* current = *head;
+        Node<T>* current = *head;
         do
         {
             if (current->iPayload > current->ptrNext->iPayload)
@@ -35,7 +36,8 @@ void bubbleSort(Node** head, int iLenght)
     }
 }
 
-void optimizedBubbleSort(Node** head, int iLenght)
+template <typename T>
+void optimizedBubbleSort(Node<T>** head, int iLenght)
 {
     if (*head == nullptr)
     {
@@ -53,7 +55,7 @@ void optimizedBubbleSort(Node** head, int iLenght)
     {
         bUnordered = false;
 
-        Node* current = *head;
+        Node<T>* current = *head;
         for(int iInnerLoop = 0; iInnerLoop < iLenght - iOuterLoop - 1; iInnerLoop++) {
             if (current->iPayload > current->ptrNext->iPayload)
             {
@@ -65,3 +67,6 @@ void optimizedBubbleSort(Node** head, int iLenght)
         if (bUnordered == false) break;
     }
 }
+
+template void bubbleSort(Node<int>**, int);
+template void optimizedBubbleSort(Node<int>**, int);

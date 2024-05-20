@@ -5,16 +5,16 @@ using std::endl;
 using std::rand;
 
 // Protótipos das funções
-Node* createNode(int);
-Node* createRandomList(int, int, int, int);
-void displayList(Node*);
-void insertEnd(Node**, int);
-void swapValues(Node *, Node *);
-void freeList(Node **);
+template <typename T> Node<T> *createNode(T);
+template <typename T>  void displayList(Node<T>*);
+template <typename T>  void insertEnd(Node<T>**, T);
+template <typename T>  void swapValues(Node<T> *, Node<T> *);
+template <typename T> void freeList(Node<T> **);
 
-Node* createNode(int iPayload)
+template <typename T>
+Node<T>* createNode(T iPayload)
 {
-    Node* temp = (Node*) malloc(sizeof(Node));
+    Node<T>* temp = (Node<T>*) malloc(sizeof(Node<T>));
     temp->iPayload = iPayload;
     temp->ptrPrev = nullptr;
     temp->ptrNext = nullptr;
@@ -22,9 +22,9 @@ Node* createNode(int iPayload)
     return temp;
 }
 
-Node *createRandomList(int iBottomLimit, int iTopLimit, int iQuantity, int iSeed)
+Node<int> *createRandomList(int iBottomLimit, int iTopLimit, int iQuantity, int iSeed)
 {
-    Node *head = nullptr;
+    Node<int> *head = nullptr;
     srand(iSeed);
     for (int i = 0; i < iQuantity; i++)
     {
@@ -33,7 +33,8 @@ Node *createRandomList(int iBottomLimit, int iTopLimit, int iQuantity, int iSeed
     return head;
 }
 
-void displayList(Node* node)
+template <typename T>
+void displayList(Node<T>* node)
 {
     if (node == nullptr)
     {
@@ -46,7 +47,7 @@ void displayList(Node* node)
         return;
     }
 
-    Node* current = node;
+    Node<T>* current = node;
     cout << "Valores: ";
     while (current != nullptr)
     {
@@ -58,16 +59,17 @@ void displayList(Node* node)
     return;
 }
 
-void insertEnd(Node** head, int iPayload)
+template <typename T>
+void insertEnd(Node<T>** head, T iPayload)
 {
-    Node* newNode = createNode(iPayload);
+    Node<T>* newNode = createNode<T>(iPayload);
     if (*head == nullptr)
     {
         (*head) = newNode;
         return;
     }
 
-    Node* current = (*head);
+    Node<T>* current = (*head);
 
     while (current->ptrNext != nullptr) current = current->ptrNext;
 
@@ -77,7 +79,8 @@ void insertEnd(Node** head, int iPayload)
     return;
 }
 
-void swapValues(Node* Node1, Node* Node2)
+template <typename T>
+void swapValues(Node<T>* Node1, Node<T>* Node2)
 {
     // Trocando somente os Payloads
     int iTemp = Node1->iPayload;
@@ -85,8 +88,9 @@ void swapValues(Node* Node1, Node* Node2)
     Node2->iPayload = iTemp;
 }
 
-void freeList(Node** head){
-    Node* current = *head;
+template <typename T>
+void freeList(Node<T>** head){
+    Node<T>* current = *head;
     current = current->ptrNext;
     while(current->ptrNext != nullptr){
         free(current->ptrPrev);
@@ -94,3 +98,9 @@ void freeList(Node** head){
     }
     free(current);
 }
+
+template Node<int> *createNode(int);
+template void displayList(Node<int> *);
+template void insertEnd(Node<int> **, int);
+template void swapValues(Node<int> *, Node<int> *);
+template void freeList(Node<int> **);
