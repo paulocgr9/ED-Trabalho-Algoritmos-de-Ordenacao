@@ -34,16 +34,16 @@ void shellSort(Node<T>** head, int iLength)
         while (current != nullptr)
         {
             iInsertValue = current->iPayload;
-            Node<T>* iInnerLoop = current;
-            Node<T>* iBacker = walkList(current, -iGap);
+            Node<T>* currentInsertion = current;
+            Node<T>* Backer = walkList(current, -iGap);
 
-            while (iBacker != nullptr && iInsertValue < iBacker->iPayload)
+            while (Backer != nullptr && iInsertValue < Backer->iPayload)
             {
-                iInnerLoop->iPayload = iBacker->iPayload;
-                iInnerLoop = iBacker;
-                iBacker = walkList(iBacker, -iGap);
+                currentInsertion->iPayload = Backer->iPayload;
+                currentInsertion = Backer;
+                Backer = walkList(Backer, -iGap);
             }
-            iInnerLoop->iPayload = iInsertValue;
+            currentInsertion->iPayload = iInsertValue;
             current = current->ptrNext;
         }
     }
@@ -75,7 +75,7 @@ void shellSortExplained(Node<T>** head, int iLength)
 
     cout << "Para uma lista de " << iLength << " elementos, a nossa implementação terá " << iGapsCount << " gaps." << endl;
 
-    for (int i = iGapsCount; i >0; i--)
+    for (int i = iGapsCount; i > 0; i--)
     {
         int iGap = pow(2, i) - 1;
         cout << "Iterando por toda a lista com um gap igual à " << iGap << ". Atualmente, a lista está "
@@ -92,20 +92,20 @@ void shellSortExplained(Node<T>** head, int iLength)
             for(int j = iPos - iGap; j >= 0; j = j - iGap) cout << ", " << j;
             cout << " da lista." << endl;
             iInsertValue = current->iPayload;
-            Node<T>* iInnerLoop = current;
-            Node<T>* iBacker = walkList(current, -iGap);
+            Node<T>* currentInsertion = current;
+            Node<T>* Backer = walkList(current, -iGap);
             int iRetrocedidos = 0;
 
-            while (iBacker != nullptr && iInsertValue < iBacker->iPayload)
+            while (Backer != nullptr && iInsertValue < Backer->iPayload)
             {
                 cout << "    O elemento na posição " << iPos - iRetrocedidos*iGap << "(" << iInsertValue << ") é menor que o elemento da posição"
-                << iPos - (iRetrocedidos+1)*iGap << "(" << iBacker->iPayload << ") e por isso eles serão trocados." << endl;
-                iInnerLoop->iPayload = iBacker->iPayload;
-                iInnerLoop = iBacker;
-                iBacker = walkList(iBacker, -iGap);
+                << iPos - (iRetrocedidos+1)*iGap << "(" << Backer->iPayload << ") e por isso eles serão trocados." << endl;
+                currentInsertion->iPayload = Backer->iPayload;
+                currentInsertion = Backer;
+                Backer = walkList(Backer, -iGap);
                 iRetrocedidos++;
             }
-            iInnerLoop->iPayload = iInsertValue;
+            currentInsertion->iPayload = iInsertValue;
             if (iRetrocedidos != 0)
             {
                 cout << "    Após as trocas, a lista ficou desta forma:" << endl << "    ";

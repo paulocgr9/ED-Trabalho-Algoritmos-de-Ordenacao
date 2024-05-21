@@ -21,21 +21,21 @@ void insertSort(Node<T>** head, int iLength)
     }
 
     int iInsertValue = 0;
-    Node<T>* iInnerLoop = nullptr;
+    Node<T>* currentBack = nullptr;
 
     Node<T>* current = (*head)->ptrNext;
     while (current != nullptr)
     {
         iInsertValue = current->iPayload;
-        iInnerLoop = current;
+        currentBack = current;
 
-        while (iInnerLoop->ptrPrev != nullptr && iInsertValue < iInnerLoop->ptrPrev->iPayload)
+        while (currentBack->ptrPrev != nullptr && iInsertValue < currentBack->ptrPrev->iPayload)
         {
-            iInnerLoop->iPayload = iInnerLoop->ptrPrev->iPayload;
-            iInnerLoop = iInnerLoop->ptrPrev; 
+            currentBack->iPayload = currentBack->ptrPrev->iPayload;
+            currentBack = currentBack->ptrPrev; 
         }
 
-        iInnerLoop->iPayload = iInsertValue;
+        currentBack->iPayload = iInsertValue;
         current = current->ptrNext;
     }
 }

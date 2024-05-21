@@ -21,7 +21,7 @@ void bubbleSort(Node<T>** head, int iLenght)
         return;
     }
 
-    for (int iOuterLoop = 0; iOuterLoop < iLenght-1; iOuterLoop++)
+    for (int iLoop = 0; iLoop < iLenght-1; iLoop++)
     {
         Node<T>* current = *head;
         do
