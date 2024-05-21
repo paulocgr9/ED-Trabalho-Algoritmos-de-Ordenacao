@@ -4,6 +4,7 @@
 #include "bubble.h"
 #include "selection.h"
 #include "insert.h"
+#include "shell.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -50,8 +51,8 @@ int main()
 
     for (int iIndex = 0; iIndex < iNumeroSeeds; iIndex++)
     {
-        Node<int>* currentList1 = createRandomList(0, 1000, 10000, iIndex);
-        Node<int>* currentList2 = createRandomList(0, 1000, 10000, iIndex);
+        Node<int>* currentList1 = createRandomList(0, 100, 10000, iIndex);
+        Node<int>* currentList2 = createRandomList(0, 100, 10000, iIndex);
         
         auto timeStart = high_resolution_clock::now();
         selectionSort(&currentList1);
@@ -83,7 +84,7 @@ int main()
 
     for (int iIndex = 0; iIndex < iNumeroSeeds; iIndex++)
     {
-        Node<int>* currentList1 = createRandomList(0, 1000, 10000, iIndex);
+        Node<int>* currentList1 = createRandomList(0, 100, 10000, iIndex);
 
         auto timeStart = high_resolution_clock::now();
         insertSort(&currentList1, 10000);
@@ -96,6 +97,26 @@ int main()
   
     cout << "Insert Sort" << endl;
     for (int i = 0; i < 100; i++) cout << temposInsertSort[i] << ", ";
+    cout << "\n" << endl;
+
+
+    long long int temposShellSort[iNumeroSeeds] = {};
+
+    for (int iIndex = 0; iIndex < iNumeroSeeds; iIndex++)
+    {
+        Node<int>* currentList1 = createRandomList(0, 100, 10000, iIndex);
+
+        auto timeStart = high_resolution_clock::now();
+        insertSort(&currentList1, 10000);
+        auto timeStop = high_resolution_clock::now();
+        
+        auto timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+        temposShellSort[iIndex] = timeDuration.count();
+        freeList(&currentList1);
+    }
+  
+    cout << "Shell Sort" << endl;
+    for (int i = 0; i < 100; i++) cout << temposShellSort[i] << ", ";
     cout << endl;
 
 }

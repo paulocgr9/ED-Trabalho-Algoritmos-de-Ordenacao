@@ -9,6 +9,7 @@ template <typename T>  void displayList(Node<T>*);
 template <typename T>  void insertEnd(Node<T>**, T);
 template <typename T>  void swapValues(Node<T> *, Node<T> *);
 template <typename T> void freeList(Node<T> **);
+template <typename T> Node<T>* walkList(Node<T>*, int);
 
 template <typename T>
 Node<T>* createNode(T iPayload)
@@ -98,8 +99,45 @@ void freeList(Node<T>** head){
     free(current);
 }
 
+template <typename T>
+Node<T>* walkList(Node<T>* current, int iSteps)
+{
+    if (iSteps < 0)
+    {
+        for (int i = 0; i > iSteps; i--) 
+        {
+            if (current != nullptr)
+            {
+                current = current->ptrPrev;
+            }
+            else
+            {
+                return nullptr;
+            }
+        }
+    }
+
+    if (iSteps > 0)
+    {
+        for (int i = 0; i < iSteps; i++) 
+        {
+            if (current != nullptr)
+            {
+                current = current->ptrNext;
+            }
+            else
+            {
+                return nullptr;
+            }
+        }
+    }
+
+    return current;
+}
+
 template Node<int> *createNode(int);
 template void displayList(Node<int> *);
 template void insertEnd(Node<int> **, int);
 template void swapValues(Node<int> *, Node<int> *);
 template void freeList(Node<int> **);
+template Node<int>* walkList(Node<int>*, int);
