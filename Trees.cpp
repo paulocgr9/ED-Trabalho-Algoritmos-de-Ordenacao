@@ -12,6 +12,7 @@ int treeHeight(NodeTree*);
 
 //Metodos para busca
 NodeTree* dfsSearchNode(NodeTree*, int);
+NodeTree* bfsSearchNode(NodeTree*, int);
 
 //Metodos para traverse
 void dfsTraversePreOrder(NodeTree*);
@@ -38,12 +39,19 @@ int main()
     root = insertNodeTree(root, 28);
     root = insertNodeTree(root, 51);
     root = insertNodeTree(root, 171);
+    root = insertNodeTree(root, 25);
+    root = insertNodeTree(root, 32);
 
     cout << "BFS Traversal: ";
     bfsTraverse(root);
     cout << endl;
 
     cout << "Tree Height: " << treeHeight(root) << endl;
+
+    NodeTree* dfsSearchFor28 = dfsSearchNode(root, 28);
+    cout << dfsSearchFor28->iPayload << endl;
+    cout << dfsSearchFor28->ptrLeft->iPayload << endl;
+    cout << dfsSearchFor28->ptrRight->iPayload << endl;
 
     return 0;
 }
@@ -207,6 +215,35 @@ void bfsTraverse(NodeTree* startingNode)
         }
         
     }
+}
+
+NodeTree* bfsSearchNode(NodeTree* root, int iPayload)
+{
+    if (root == nullptr) return nullptr;
+
+    NodeQueue* ptrQueue = nullptr;
+    insertEndQueue(&ptrQueue, root);
+    
+    while (ptrQueue != nullptr)
+    {
+        NodeTree* currentNode = ptrQueue->ptrPayload;
+        ptrQueue = ptrQueue->ptrNext;
+        
+        cout << currentNode->iPayload << " ";
+        if (currentNode->iPayload == iPayload) return currentNode;  
+    
+        if (currentNode->ptrLeft != nullptr)
+        {
+            insertEndQueue(&ptrQueue, currentNode->ptrLeft);
+        }
+        
+        if (currentNode->ptrRight != nullptr)
+        {
+            insertEndQueue(&ptrQueue, currentNode->ptrRight);
+        }
+    }
+
+    return nullptr;
 }
 
 int treeHeight(NodeTree* startingNode)
