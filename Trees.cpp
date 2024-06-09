@@ -4,61 +4,36 @@
 using namespace std;
 
 //Metodos para manipulacao basica de arvores 
-NodeTree* newNodeTree(int);
-NodeTree* insertNodeTree(NodeTree*, int);
-NodeTree* lesserLeaf(NodeTree*);
-NodeTree* deleteNodeTree(NodeTree*, int);
-int treeHeight(NodeTree*);
+template <typename T> NodeTree<T>* newNodeTree(T);
+template <typename T> NodeTree<T>* insertNodeTree(NodeTree<T>*, T);
+template <typename T> NodeTree<T>* lesserLeaf(NodeTree<T>*);
+template <typename T> NodeTree<T>* deleteNodeTree(NodeTree<T>*, T);
+template <typename T> int treeHeight(NodeTree<T>*);
+NodeTree<int> *createRandomTree(int, int, int, int);
 
 //Metodos para busca
-NodeTree* dfsSearchNode(NodeTree*, int);
-NodeTree* bfsSearchNode(NodeTree*, int);
+template <typename T> NodeTree<T>* dfsSearchNode(NodeTree<T>*, T);
+template <typename T> NodeTree<T>* bfsSearchNode(NodeTree<T>*, T);
 
 //Metodos para traverse
-void dfsTraversePreOrder(NodeTree*);
-void dfsTraverseInOrder(NodeTree*);
-void dfsTraversePostOrder(NodeTree*);
-void bfsTraverse(NodeTree*);
+template <typename T> void dfsTraversePreOrder(NodeTree<T>*);
+template <typename T> void dfsTraverseInOrder(NodeTree<T>*);
+template <typename T> void dfsTraversePostOrder(NodeTree<T>*);
+template <typename T> void bfsTraverse(NodeTree<T>*);
 
 //Estrutura auxiliar de fila, so para esse arquivo
+template <typename T>
 struct NodeQueue
 {
-    NodeTree* ptrPayload;
+    NodeTree<T>* ptrPayload;
     NodeQueue* ptrNext;
 };
-void insertEndQueue(NodeQueue**, NodeTree*); //Funcao para auxiliar a andar na fila
+template <typename T> void insertEndQueue(NodeQueue<T>**, NodeTree<T>*); //Funcao para auxiliar a andar na fila
 
-int main()
+template <typename T>
+void insertEndQueue(NodeQueue<T>** head, NodeTree<T>* ptrPayload)
 {
-    NodeTree* root = nullptr;
-
-    root = insertNodeTree(root, 42);
-    root = insertNodeTree(root, 13);
-    root = insertNodeTree(root, 11);
-    root = insertNodeTree(root, 10);
-    root = insertNodeTree(root, 28);
-    root = insertNodeTree(root, 51);
-    root = insertNodeTree(root, 171);
-    root = insertNodeTree(root, 25);
-    root = insertNodeTree(root, 32);
-
-    cout << "BFS Traversal: ";
-    bfsTraverse(root);
-    cout << endl;
-
-    cout << "Tree Height: " << treeHeight(root) << endl;
-
-    NodeTree* dfsSearchFor28 = dfsSearchNode(root, 28);
-    cout << dfsSearchFor28->iPayload << endl;
-    cout << dfsSearchFor28->ptrLeft->iPayload << endl;
-    cout << dfsSearchFor28->ptrRight->iPayload << endl;
-
-    return 0;
-}
-
-void insertEndQueue(NodeQueue** head, NodeTree* ptrPayload)
-{
-    NodeQueue* newNode = (NodeQueue*) malloc(sizeof(NodeQueue));
+    NodeQueue<T>* newNode = (NodeQueue<T>*) malloc(sizeof(NodeQueue<T>));
     newNode->ptrPayload = ptrPayload;
     newNode->ptrNext = nullptr;
 
@@ -68,7 +43,7 @@ void insertEndQueue(NodeQueue** head, NodeTree* ptrPayload)
         return;
     }
 
-    NodeQueue* current = (*head);
+    NodeQueue<T>* current = (*head);
     while (current->ptrNext != nullptr) current = current->ptrNext;
 
     current->ptrNext = newNode;
@@ -76,9 +51,10 @@ void insertEndQueue(NodeQueue** head, NodeTree* ptrPayload)
     return;
 }
 
-NodeTree* newNodeTree(int iData)
+template <typename T>
+NodeTree<T>* newNodeTree(T iData)
 {
-    NodeTree* tmp = (NodeTree*) malloc(sizeof(NodeTree));
+    NodeTree<T>* tmp = (NodeTree<T>*) malloc(sizeof(NodeTree<T>));
   
     if (tmp != nullptr)
     {
@@ -90,7 +66,8 @@ NodeTree* newNodeTree(int iData)
     return tmp;
 }
 
-NodeTree* insertNodeTree(NodeTree* startingNode, int iData)
+template <typename T>
+NodeTree<T>* insertNodeTree(NodeTree<T>* startingNode, T iData)
 {
     if(startingNode == nullptr)
     {
@@ -109,7 +86,19 @@ NodeTree* insertNodeTree(NodeTree* startingNode, int iData)
     return startingNode;
 }
 
-NodeTree* dfsSearchNode(NodeTree* startingNode, int iData)
+NodeTree<int> *createRandomTree(int iBottomLimit, int iTopLimit, int iQuantity, int iSeed)
+{
+    NodeTree<int> *head = nullptr;
+    srand(iSeed);
+    for (int i = 0; i < iQuantity; i++)
+    {
+        head = insertNodeTree(head, iBottomLimit + (rand() % (iTopLimit - iBottomLimit)));
+    }
+    return head;
+}
+
+template <typename T>
+NodeTree<T>* dfsSearchNode(NodeTree<T>* startingNode, T iData)
 {
     if(startingNode == nullptr) return nullptr;
     else if(iData == startingNode->iPayload) return startingNode;
@@ -117,16 +106,18 @@ NodeTree* dfsSearchNode(NodeTree* startingNode, int iData)
     else return dfsSearchNode(startingNode->ptrRight, iData);
 }
 
-NodeTree* lesserLeaf(NodeTree* startingNode)
+template <typename T>
+NodeTree<T>* lesserLeaf(NodeTree<T>* startingNode)
 {
-    NodeTree* ptrCurrent = startingNode;
+    NodeTree<T>* ptrCurrent = startingNode;
  
     while (ptrCurrent && ptrCurrent->ptrLeft != nullptr) ptrCurrent = ptrCurrent->ptrLeft;
     
     return ptrCurrent;
 }
 
-NodeTree* deleteNodeTree(NodeTree* startingNode, int iData)
+template <typename T>
+NodeTree<T>* deleteNodeTree(NodeTree<T>* startingNode, T iData)
 {
     if (startingNode == nullptr) return nullptr;
     
@@ -134,7 +125,7 @@ NodeTree* deleteNodeTree(NodeTree* startingNode, int iData)
     else if (iData > startingNode->iPayload) startingNode->ptrRight = deleteNodeTree(startingNode->ptrRight, iData);
     else
     {
-        NodeTree* ptrTemp = nullptr;
+        NodeTree<T>* ptrTemp = nullptr;
         
         if (startingNode->ptrLeft == nullptr)
         {
@@ -159,7 +150,8 @@ NodeTree* deleteNodeTree(NodeTree* startingNode, int iData)
     return startingNode;
 }
 
-void dfsTraversePreOrder(NodeTree* ptrStartingNode)
+template <typename T>
+void dfsTraversePreOrder(NodeTree<T>* ptrStartingNode)
 {
     if (ptrStartingNode != nullptr)
     {
@@ -169,7 +161,8 @@ void dfsTraversePreOrder(NodeTree* ptrStartingNode)
     }
 }
 
-void dfsTraverseInOrder(NodeTree* ptrStartingNode)
+template <typename T>
+void dfsTraverseInOrder(NodeTree<T>* ptrStartingNode)
 {
     if (ptrStartingNode != nullptr)
     {
@@ -179,7 +172,8 @@ void dfsTraverseInOrder(NodeTree* ptrStartingNode)
     }
 }
 
-void dfsTraversePostOrder(NodeTree* ptrStartingNode)
+template <typename T>
+void dfsTraversePostOrder(NodeTree<T>* ptrStartingNode)
 {
     if (ptrStartingNode != nullptr)
     {
@@ -189,17 +183,18 @@ void dfsTraversePostOrder(NodeTree* ptrStartingNode)
     }
 }
 
-void bfsTraverse(NodeTree* startingNode)
+template <typename T>
+void bfsTraverse(NodeTree<T>* startingNode)
 {
     if (startingNode == nullptr) return;
     
     // Parte 1 do Trabalho: Alterar para Lista Encadeada - feita
-    NodeQueue* ptrQueue = nullptr;
+    NodeQueue<T>* ptrQueue = nullptr;
     insertEndQueue(&ptrQueue, startingNode);
     
     while (ptrQueue != nullptr)
     {
-        NodeTree* currentNode = ptrQueue->ptrPayload;
+        NodeTree<T>* currentNode = ptrQueue->ptrPayload;
         ptrQueue = ptrQueue->ptrNext;
         
         cout << currentNode->iPayload << " ";
@@ -217,16 +212,17 @@ void bfsTraverse(NodeTree* startingNode)
     }
 }
 
-NodeTree* bfsSearchNode(NodeTree* root, int iPayload)
+template <typename T>
+NodeTree<T>* bfsSearchNode(NodeTree<T>* root, T iPayload)
 {
     if (root == nullptr) return nullptr;
 
-    NodeQueue* ptrQueue = nullptr;
+    NodeQueue<T>* ptrQueue = nullptr;
     insertEndQueue(&ptrQueue, root);
     
     while (ptrQueue != nullptr)
     {
-        NodeTree* currentNode = ptrQueue->ptrPayload;
+        NodeTree<T>* currentNode = ptrQueue->ptrPayload;
         ptrQueue = ptrQueue->ptrNext;
         
         cout << currentNode->iPayload << " ";
@@ -246,7 +242,8 @@ NodeTree* bfsSearchNode(NodeTree* root, int iPayload)
     return nullptr;
 }
 
-int treeHeight(NodeTree* startingNode)
+template <typename T>
+int treeHeight(NodeTree<T>* startingNode)
 {
     if (startingNode == nullptr) return 0;
     else
@@ -257,3 +254,15 @@ int treeHeight(NodeTree* startingNode)
         return max(iLeftHeight, iRightHeight) + 1;
     }
 }
+
+template NodeTree<int>* newNodeTree(int);
+template NodeTree<int>* insertNodeTree(NodeTree<int>*, int);
+template NodeTree<int>* lesserLeaf(NodeTree<int>*);
+template NodeTree<int>* deleteNodeTree(NodeTree<int>*, int);
+template int treeHeight(NodeTree<int>*);
+template NodeTree<int>* dfsSearchNode(NodeTree<int>*, int);
+template NodeTree<int>* bfsSearchNode(NodeTree<int>*, int);
+template void dfsTraversePreOrder(NodeTree<int>*);
+template void dfsTraverseInOrder(NodeTree<int>*);
+template void dfsTraversePostOrder(NodeTree<int>*);
+template void bfsTraverse(NodeTree<int>*);
