@@ -23,5 +23,6 @@ template <typename T> void swapValues(Node<T> *, Node<T> *);
 template <typename T> void freeList(Node<T> **);
 Node<int>* createRandomList(int, int, int, int);
 template <typename T> Node<T>* walkList(Node<T>*, int);
+template <typename T> Node<T>* searchList(Node<T>**, T);
 
 #endif

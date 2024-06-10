@@ -226,7 +226,6 @@ NodeTree<T>* bfsSearchNode(NodeTree<T>* root, T iPayload)
         NodeTree<T>* currentNode = ptrQueue->ptrPayload;
         ptrQueue = ptrQueue->ptrNext;
         
-        cout << currentNode->iPayload << " ";
         if (currentNode->iPayload == iPayload) return currentNode;  
     
         if (currentNode->ptrLeft != nullptr)
