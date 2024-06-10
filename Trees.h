@@ -29,5 +29,6 @@ template <typename T> void dfsTraverseInOrder(NodeTree<T>*);
 template <typename T> void dfsTraversePostOrder(NodeTree<T>*);
 template <typename T> void bfsTraverse(NodeTree<T>*);
 NodeTree<int> *createRandomTree(int, int, int, int);
+template <typename T> void freeTree(NodeTree<T>*);
 
 #endif

@@ -10,6 +10,7 @@ template <typename T> NodeTree<T>* lesserLeaf(NodeTree<T>*);
 template <typename T> NodeTree<T>* deleteNodeTree(NodeTree<T>*, T);
 template <typename T> int treeHeight(NodeTree<T>*);
 NodeTree<int> *createRandomTree(int, int, int, int);
+template <typename T> void freeTree(NodeTree<T>*);
 
 //Metodos para busca
 template <typename T> NodeTree<T>* dfsSearchNode(NodeTree<T>*, T);
@@ -255,6 +256,17 @@ int treeHeight(NodeTree<T>* startingNode)
     }
 }
 
+template <typename T>
+void freeTree(NodeTree<T>* ptrStartingNode)
+{
+    if (ptrStartingNode != nullptr)
+    {
+        freeTree(ptrStartingNode->ptrLeft);
+        freeTree(ptrStartingNode->ptrRight);
+        free(ptrStartingNode);
+    }
+}
+
 template NodeTree<int>* newNodeTree(int);
 template NodeTree<int>* insertNodeTree(NodeTree<int>*, int);
 template NodeTree<int>* lesserLeaf(NodeTree<int>*);
@@ -266,3 +278,4 @@ template void dfsTraversePreOrder(NodeTree<int>*);
 template void dfsTraverseInOrder(NodeTree<int>*);
 template void dfsTraversePostOrder(NodeTree<int>*);
 template void bfsTraverse(NodeTree<int>*);
+template void freeTree(NodeTree<int>*);
